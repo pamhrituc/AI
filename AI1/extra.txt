@@ -1,0 +1,84 @@
+ss = copy.deepcopy(s)
+print(ss.expand(s))
+print(s.isValid())
+print(ss.expand(s))
+print(s.isValid())
+s = State([[3, 1, 0, 2], [0, 1, 4, 0], [1, 2, 0, 4], [0, 3, 2, 1]])
+
+'''
+ss = copy.deepcopy(s)
+print(ss.expand(s))
+print(ss.expand(s))
+print(s.isValid())
+'''
+'''
+ss = State([[3, 1, 0, 2], [0, 1, 4, 0], [1, 2, 0, 4], [0, 3, 2, 1]])
+ss = copy.deepcopy(s)
+sss = State([[3, 4, 1, 2], [2, 1, 4, 3], [1, 2, 3, 4], [4, 3, 2, 1]])
+print(s.isValid())
+print(s.expand(s))
+print(ss.expand(s))
+print(State([[2, 2, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]).isValid())
+'''
+#print(s.difference(ss))
+'''
+sE = ss.expand(State([[3, 4, 1, 2], [0, 1, 4, 0], [1, 2, 0, 4], [0, 3, 2, 1]]))
+print(s)
+print(sE)
+print(s.expand(sE))
+'''
+'''
+print("Is ss a solution?")
+print(ss.isSolution())
+print("Is sss a solution?")
+print(sss.isSolution())
+
+print("_________________")
+'''
+'''
+ctrl = Controller(s)
+print(ctrl.bfs(s.getMatrix()))
+'''
+def bfs(self, root):
+        q = [State(root)]
+        visited = []
+        found = False
+        print(q)
+        prob = copy.deepcopy(self.__instance)
+        while q != [] and not found:
+            current = q.pop()
+            #print("current after pop")
+            #print(str(current))
+            if current.isSolution():
+                found = True
+                return current.getMatrix()
+            else:
+                #print("instance before expand")
+                #print(str(self.__instance))
+                #print("prob before")
+                #print(prob)
+                if prob.difference(current) == prob.getDim() and current.isValid() == True:
+                    print("diff")
+                    prob = copy.deepcopy(visited.pop(0))
+                if prob.difference(current) == prob.getDim() and current.isValid() == False:
+                    prob = copy.deepcopy(visited.pop(0))
+                    current = copy.deepcopy(prob)
+                #print("prob")
+                #print(str(prob))
+                aux = prob.expand(current)
+                print("instance after expand")
+                print(str(self.__instance))
+                #print("prob")
+                #print(str(prob))
+                q = q + [aux]
+                if aux.isValid() == True and aux not in visited:
+                    #print("visit")
+                    v = copy.deepcopy(aux)
+                    visited.append(v)
+                    #print(str(visited[0]))
+
+        return found
+
+
+        print(s.hasZeros())
+        print(State([[1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4]]).hasZeros())
