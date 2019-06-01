@@ -1,0 +1,29 @@
+Temperature 55
+Capacity 4
+The value of the temperature in the cold part 0
+The value of the temperature in the cool part 0.75
+The value of the temperature in the moderate part 0
+The value of the temperature in the hot part 0
+The value of the temperature in the very hot part 0
+The value of the capacity in the small part 0.2
+The value of the capacity in the medium part 0.5
+The value of the capacity in the high part 0
+cold and small 0
+cool and small 0.2
+moderate and small 0
+hot and small 0
+veryhot and small 0
+moderate and medium 0
+hot and medium 0
+veryhot and medium 0
+moderate and high 0
+hot and high 0
+veryhot and high 0
+cold and medium 0
+cool and medium 0.5
+cold and high 0
+cool and high 0
+Value for small class 0.2
+Value for medium class 0.5
+Value for high class 0
+P = 8.571428571428571

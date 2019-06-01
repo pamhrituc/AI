@@ -1,0 +1,83 @@
+Using the Mamdani model, the furnace power will be calculated using the temperature and capacity class values.
+
+As a first step, we need to determine the sets for each class of temperature and capacity values, as well as the power. In order to calculate the values of each class, we use the appropriate gradual limit for the respective fuzzy set.
+
+After this step is done, and the values of each temperature and capacity class is obtained, we calculate the values of the power classes, obtained by finding the minimum of the two corresponding values of the classes (read from table) obtained in the previous step.
+
+In order to obtain the value of each class in the power fuzzy set, we retain the maximum of the obtained values.
+
+Lastly, since we have used the Mamdani model, the Centroid Area will be estimated by using a sample of points.
+
+Validation of results:
+
+#1:
+temperature = 72
+capacity = 7
+
+u[cold](t = 72) = max{0, min{(72 - 20)/(20 - 20), 1, (50 - 72)/(50 - 30)}} = max{0, -22/20} = 0
+u[cool](t = 72) = max{0, min{(72 - 30)/(50 - 30), 1, (70 - 72)/(70 - 50)}} = max{0, -0.1} = 0
+u[moderate](t = 72) = max{0, min{(72 - 70)/(90 - 70), 1, (80 - 72)/(80 - 70)}} = max{0, 0.8} = 0.8
+u[hot](t = 72) = max{0, min{(72 - 70)/(90 - 70), 1, (110 - 72)/(110, 90)}} = max{0, 0.1} = 0.1
+u[very hot](t = 72) = max{0, min{(72 - 90)/(110 - 90), 1, (120 - 72)/(120 - 120)}} = max{0, -18/20} = 0
+
+u[small](c = 7) = max{0, min{(7 - 0)/(0 - 0), 1, (5 - 7)/(5 - 0)}} = max{0, -0.4} = 0
+u[medium](c = 7) = max{0, min{(7 - 3)/(5 - 3), 1, (7 - 7)/(7 - 5)}} = max{0, 0} = 0
+u[high](c = 7) = max{0, min{(7 - 5)/(10 - 5), 1, (10 - 7)/(10 - 10)}} = max{0, 0.4} = 0.4
+
+small => cold and small = min{u[cold], u[small]} = min{0, 0} = 0
+medium => cold and medium = min{u[cold], u[medium]} = min{0, 0} = 0
+high => cold and high = min{u[cold], u[high]} = min{0, 0.4} = 0
+small => cool and small = min{u[cool], u[small]} = min{0, 0} = 0
+medium => cool and medium = min{u[cool], u[medium]} = min{0, 0} = 0
+high => cool and high = min{u[cool], u[high]} = min{0, 0.4} = 0
+small => moderate and small = min{u[moderate], u[small]} = min{0.8, 0} = 0
+small => moderate and medium = min{u[moderate], u[medium]} = min{0.8, 0} = 0
+small => moderate and high = min{u[moderate], u[high]} = min{0.8, 0.4} = 0.4
+small => hot and small = min{u[hot], u[small]} = min{0.1, 0} = 0
+small => hot and medium = min{u[cold], u[medium]} = min{0.1, 0} = 0
+small => hot and high = min{u[hot], u[high]} = min{0.1, 0.4} = 0.1
+small => very hot and small = min{u[very hot], u[small]} = min{0, 0} = 0
+small => very hot and medium = min{u[very hot], u[medium]} = min{0, 0} = 0
+small => very hot and high = min{u[very hot], u[high]} = min{0, 0.4} = 0
+
+power[small] = max of all small values = 0.4
+power[medium] = max of all medium values = 0
+power[high] = max of all high values = 0
+
+P = 5 * power[small] + 10 * power[medium] + 15 * power[high])/(power[small] + power[medium] + power[high]) = (5 * 0.4 + 10 * 0 + 15 * 0)/(0.4 + 0 + 0) = 5
+
+#2:
+temperature = 55
+capacity = 4
+
+u[cold](t = 55) = max{0, min{(55 - 20)/(20 - 20), 1, (50 - 55)/(50 - 30)}} = max{0, -0.25} = 0
+u[cool](t = 55) = max{0, min{(55 - 30)/(50 - 30), 1, (70 - 55)/(70 - 50)}} = max{0, 0.75} = 0.75
+u[moderate](t = 55) = max{0, min{(55 - 70)/(90 - 70), 1, (80 - 55)/(80 - 70)}} = max{0, -0.5} = 0
+u[hot](t = 55) = max{0, min{(55 - 70)/(90 - 70), 1, (110 - 55)/(110, 90)}} = max{0, -0.75} = 0
+u[very hot](t = 55) = max{0, min{(55 - 90)/(110 - 90), 1, (120 - 55)/(120 - 120)}} = max{0, -35/20} = 0
+
+u[small](c = 4) = max{0, min{(4 - 0)/(0 - 0), 1, (5 - 4)/(5 - 0)}} = max{0, 0.2} = 0.2
+u[medium](c = 4) = max{0, min{(4 - 3)/(5 - 3), 1, (7 - 4)/(7 - 5)}} = max{0, 0.5} = 0.5
+u[high](c = 4) = max{0, min{(4 - 5)/(10 - 5), 1, (10 - 4)/(10 - 10)}} = max{0, -0.2} = 0
+
+small => cold and small = min{u[cold], u[small]} = min{0, 0.2} = 0
+medium => cold and medium = min{u[cold], u[medium]} = min{0, 0.5} = 0
+high => cold and high = min{u[cold], u[high]} = min{0, 0.4} = 0
+small => cool and small = min{u[cool], u[small]} = min{0.75, 0.2} = 0.2
+medium => cool and medium = min{u[cool], u[medium]} = min{0.75, 0.5} = 0.5
+high => cool and high = min{u[cool], u[high]} = min{0.75, 0} = 0
+small => moderate and small = min{u[moderate], u[small]} = min{0, 0.2} = 0
+small => moderate and medium = min{u[moderate], u[medium]} = min{0, 0.5} = 0
+small => moderate and high = min{u[moderate], u[high]} = min{0, 0} = 0
+small => hot and small = min{u[hot], u[small]} = min{0, 0.2} = 0
+small => hot and medium = min{u[cold], u[medium]} = min{0, 0.5} = 0
+small => hot and high = min{u[hot], u[high]} = min{0, 0} = 0
+small => very hot and small = min{u[very hot], u[small]} = min{0, 0.2} = 0
+small => very hot and medium = min{u[very hot], u[medium]} = min{0, 0.5} = 0
+small => very hot and high = min{u[very hot], u[high]} = min{0, 0} = 0
+
+power[small] = max of all small values = 0.2
+power[medium] = max of all medium values = 0.5
+power[high] = max of all high values = 0
+
+P = 5 * power[small] + 10 * power[medium] + 15 * power[high])/(power[small] + power[medium] + power[high]) = (5 * 0.2 + 10 * 0.5 + 15 * 0)/(0.2 + 0.5 + 0) = (1 + 5)/0.7 = 6/0.7 = 60/7 = 8.5714
